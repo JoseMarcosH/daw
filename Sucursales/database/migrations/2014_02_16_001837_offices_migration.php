@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('countries',function(Blueprint $table){
+        Schema::create('offices',function(Blueprint $table){
             $table->increments('id');
-            $table->string('country');
+            $table->integer('id_country')->unsigned();
+            $table->string('key');
             $table->timestamps();
+            $table->foreign('id_country')->references('id')->on('countries');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('offices');
     }
 };
