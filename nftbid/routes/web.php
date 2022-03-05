@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dash\ProductosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,15 @@ Route::get('/', function () {
 Route::get('/contacto',function(){
         echo"Hola estas en contacto";
 });
+Route::get('/admin', function () {
+    return view('dashboard.index');   
+});
+Route::get('/admin/productos',[ProductosController::class,'miFuncion']); 
 Route::get('/productos', function(){
     $color="#fA0011";
     $usuario="Doroteo Arango";
     $num= rand(1,50);
-    return view('front.sproductos')
+    return view('front.productos')
             ->with('colorsote',$color)
             ->with('usuario',$usuario)
             ->with('numero',$num);
