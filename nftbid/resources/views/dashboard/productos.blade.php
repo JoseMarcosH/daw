@@ -7,6 +7,18 @@
         <a href="#" data-toggle="modal"data-target="#modalAdd" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-upload fa-sm text-white-50"></i> Agregar Producto</a>
     </div>
+    <!-- ERRORES -->
+    @if($message = Session::get('ErrorInsert'))
+        <div class="row alert alert-denger alert-dismissable fade show" role="alert">
+          <h5>Error: {{$message}}</h5>
+          <br><br>
+          <ul>
+            @foreach($errors->all() as $error)
+              <li>{{$error}}</li>
+            @endforeach
+          </ul>
+        </div>
+    @endif
     </div>
     <!-- MODAL AGREGAR-->
     <div class="modal" tabindex="-1" role="dialog" id="modalAdd">
@@ -18,26 +30,28 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form action="/admin/productos" method="POST"enctype="multipart/form-data">
+              @csrf
             <div class="modal-body">
               <div class="from-group">
                   <label for="">Nombre</label>
-                  <input type="text" class="form-control" placeholder="Nombre Producto">
+                  <input type="text" class="form-control" placeholder="Nombre Producto" name="name">
               </div>
               <div class="from-group">
                 <label for="">Descripcion</label>
-                <input type="text" class="form-control" placeholder="Descripcion">
+                <input type="text" class="form-control" placeholder="Descripcion" name="description">
             </div>
             <div class="from-group">
                 <label for="">Precio Base</label>
-                <input type="numeric" class="form-control" placeholder="Precio Base">
+                <input type="numeric" class="form-control" placeholder="Precio Base" name="price">
             </div>
             <div class="from-group">
                 <label for="">imagen</label>
-                <input type="file" class="form-control">
+                <input type="file" class="form-control" name="img">
             </div>
             <div class="form-group">
                 <label for="">Blockchain Type</label>
-                <select name="" id="" class="form-control">
+                <select name="btype" id="" class="form-control">
                     <option value="Etherium">Etherium</option>
                     <option value="Polygon">Polygon</option>
                     <option value="Klaytn">Klaytn</option>
@@ -46,15 +60,19 @@
             </div>
             <div class="form-group">
                 <label for="">Categoria</label>
-                <select name="" id="" class="form-control">
-
+                <select name="cate" id="" class="form-control">
+                  @foreach($categorias as $cate)
+                      <option value="{{$cate->id}}">{{$cate->category}}</option>
+                  @endforeach
                 </select>
             </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary"> <i class="fa fa-save"></i> Guardar</button>
+              <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Guardar</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             </div>
+          </form>
+
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ Route::get('/admin', function () {
     return view('dashboard.index');   
 });
 Route::get('/admin/productos',[ProductosController::class,'miFuncion']); 
+Route::post('/admin/productos',[ProductosController::class, 'insertar']);
 Route::get('/productos', function(){
     $color="#fA0011";
     $usuario="Doroteo Arango";
