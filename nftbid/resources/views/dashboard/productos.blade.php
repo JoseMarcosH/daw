@@ -7,6 +7,30 @@
         <a href="#" data-toggle="modal"data-target="#modalAdd" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-upload fa-sm text-white-50"></i> Agregar Producto</a>
     </div>
+    <div class="row">
+      <!--SUCCESS -->
+      @if($message = Session::get('Listo'))
+      <div class="row alert alert-success fade show">
+        <h5 class="col-12"><i class="fa fa-chech"></i> Alerta</h5>
+        <br>
+        <br>
+        <p>{{$message}}</p>
+      </div>
+      @endif
+      <!-- PRINT PRODUCTS -->
+      <div class="row">
+        @foreach($nfts as $nft)
+          <div class="card col-3">
+            <img class="card-img-top" src="{{asset('/nfts/'.$nft->img)}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ $nft->name }}</h5>
+              <p class="card-text">{{ $nft->description }}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
     <!-- ERRORES -->
     @if($message = Session::get('ErrorInsert'))
         <div class="row alert alert-denger alert-dismissable fade show" role="alert">
@@ -35,23 +59,23 @@
             <div class="modal-body">
               <div class="from-group">
                   <label for="">Nombre</label>
-                  <input type="text" class="form-control" placeholder="Nombre Producto" name="name">
+                  <input type="text" class="form-control" placeholder="Nombre Producto" name="name" value="{{old('name')}}">
               </div>
               <div class="from-group">
                 <label for="">Descripcion</label>
-                <input type="text" class="form-control" placeholder="Descripcion" name="description">
+                <input type="text" class="form-control" placeholder="Descripcion" name="description" value="{{old('description')}}">
             </div>
             <div class="from-group">
                 <label for="">Precio Base</label>
-                <input type="numeric" class="form-control" placeholder="Precio Base" name="price">
+                <input type="numeric" class="form-control" placeholder="Precio Base" name="price" value="{{old('price')}}">
             </div>
             <div class="from-group">
                 <label for="">imagen</label>
-                <input type="file" class="form-control" name="img">
+                <input type="file" class="form-control" name="img" value="{{old('img')}}">
             </div>
             <div class="form-group">
                 <label for="">Blockchain Type</label>
-                <select name="btype" id="" class="form-control">
+                <select name="btype" id="" class="form-control" value="{{old('btype')}}">
                     <option value="Etherium">Etherium</option>
                     <option value="Polygon">Polygon</option>
                     <option value="Klaytn">Klaytn</option>
@@ -60,7 +84,7 @@
             </div>
             <div class="form-group">
                 <label for="">Categoria</label>
-                <select name="cate" id="" class="form-control">
+                <select name="cate" id="" class="form-control" value="{{old('cate')}}">
                   @foreach($categorias as $cate)
                       <option value="{{$cate->id}}">{{$cate->category}}</option>
                   @endforeach

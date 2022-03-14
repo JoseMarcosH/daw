@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dash\ProductosController;
-
+use App\Http\Controllers\Dash\CategoriesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +25,12 @@ Route::get('/admin', function () {
 });
 Route::get('/admin/productos',[ProductosController::class,'miFuncion']); 
 Route::post('/admin/productos',[ProductosController::class, 'insertar']);
+
+Route::get('/admin/categorias',[CategoriesController::class,'index']);
+Route::post('admin/categorias',[CategoriesController::class,'store']);
+
 Route::get('/productos', function(){
+
     $color="#fA0011";
     $usuario="Doroteo Arango";
     $num= rand(1,50);
