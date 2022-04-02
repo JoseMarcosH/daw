@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dash\ProductosController;
 use App\Http\Controllers\Dash\CategoriesController;
+use App\Http\Controllers\front\IndexController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,20 +15,20 @@ use App\Http\Controllers\Dash\CategoriesController;
 |
 */
 
-Route::get('/', function () {
-    return view('front.index');
-});
+Route::get('/',[IndexController::class,'index']);
 Route::get('/contacto',function(){
         echo"Hola estas en contacto";
 });
-Route::get('/admin', function () {
-    return view('dashboard.index');   
-});
-Route::get('/admin/productos',[ProductosController::class,'miFuncion']); 
-Route::post('/admin/productos',[ProductosController::class, 'insertar']);
+Route::group(['prefix'=>'admin','as'=>'admin'],function(){
+Route::get('/', function () {return view('dashboard.index');   });
+Route::get('/productos',[ProductosController::class,'miFuncion']); 
+Route::post('/productos',[ProductosController::class, 'insertar']);
 
-Route::get('/admin/categorias',[CategoriesController::class,'index']);
-Route::post('admin/categorias',[CategoriesController::class,'store']);
+Route::get('/categorias',[CategoriesController::class,'index']);
+Route::post('/categorias',[CategoriesController::class,'store']);
+Route::resource('categorias',CategoriesController::class);
+});
+
 
 Route::get('/productos', function(){
 

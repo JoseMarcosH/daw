@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Category;
+use File;
 
 class CategoriesController extends Controller
 {
@@ -34,5 +35,17 @@ class CategoriesController extends Controller
             ]);
             return back()->with('Listo','Se ha insertado correctamente');
            }
+    }
+    public function destroy($id)
+    {
+        $categoria = Category::find($id);
+        if($categoria->img !='default.jpg'){
+            if(File::exists(public_path('categories/'.$categoria->img))){
+                unlink(public_path('categories/'.$categoria->img));
+            }
+        }
+        $categoria->delete();
+        
+        return back()->with('Listo','El registro se elimino correctamente');
     }
 }
