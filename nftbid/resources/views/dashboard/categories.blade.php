@@ -25,7 +25,9 @@
           <img class="card-img-top" src="{{asset('/categories/'.$c->img)}}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{ $c->category }}</h5>
-            <button class="btn btn-primary btn-sm btnEdit" data-target="#modalUpdate" data-toggle="modal">
+            <button class="btn btn-primary btn-sm btnEdit" data-target="#modalUpdate" data-toggle="modal" data-id="{{ $c->id }}"
+              data-category="{{ $c->category }}">
+
               <i class="fa fa-edit"></i>
             </button>
             <form action="{{url('/admin/categorias',['id'=>$c->id])}}"
@@ -97,50 +99,62 @@
           </div>
         </div>
       </div>
-      <!--MODAL EDIT -->
-      <div class="modal" tabindex="-1" role="dialog" id="modalUpdate">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Actalizar categoria</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form action="/admin/categorias/update" method="POST"enctype="multipart/form-data">
-              @csrf
-              <input type="text" name="id" id="idEdit">
-            <div class="modal-body">
-              <div class="from-group">
-                  <label for="">Nombre</label>
-                  <input type="text" class="form-control" placeholder="Nombre Categoria" name="name" value="{{old('name')}}">
+      <!-- MODAL EDIT-->
+        <div class="modal" tabindex="-1" role="dialog" id="modalUpdate">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Actualizar Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-            <div class="from-group">
-                <label for="">imagen</label>
-                <input type="file" class="form-control" name="img" value="{{old('img')}}">
-            </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Guardar</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            </div>
-          </form>
+              <form action="/admin/categorias/update" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="text" name="id" id="idEdit">
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <label for="">Nombre</label>
+                          <input id="nameEdit" type="text" class="form-control" 
+                              placeholder="Categoria" name="name" 
+                              value="{{ old('name') }}">
+                      </div>
+                      <div class="form-group">
+                          <label for="">Imagen</label>
+                          <input type="file" class="form-control" name="img"  
+                              value="{{ old('img')}}">
+                      </div>
+                      
+                      
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Guardar</button>
+                  </div>
 
+              </form>
+
+            </div>
           </div>
-        </div>
       </div>
 @endsection
 @section('scrips')
 <script>
   var idEliminar=0;
   $(document).ready(function(){
-    $(".btnEliminar").click(function(){
-      var id= $(this).data('id');
-      idEliminar=id;
-    });
-    $("#doEliminar").click(function(){
-      $("#formDelete_"+idEliminar).submit();
-    });
+      $(".btnEliminar").click(function(){
+          var id= $(this).data('id');
+          idEliminar = id;
+      });
+      $("#doEliminar").click(function(){
+          $("#formDelete_"+idEliminar).submit();
+      });
+      $(".btnEdit").click(function(){
+          var id = $(this).data('id');
+          var cate = $(this).data('category');
+          $("#nameEdit").val(cate);
+          $("#idEdit").val(id);
+      });
   });
 </script>
 @endsection

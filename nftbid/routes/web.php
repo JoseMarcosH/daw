@@ -23,9 +23,10 @@ Route::group(['prefix'=>'admin','as'=>'admin'],function(){
 Route::get('/', function () {return view('dashboard.index');   });
 Route::get('/productos',[ProductosController::class,'miFuncion']); 
 Route::post('/productos',[ProductosController::class, 'insertar']);
+Route::post('/categorias/update',[CategoriesController::class,'update']);
 
-Route::get('/categorias',[CategoriesController::class,'index']);
-Route::post('/categorias',[CategoriesController::class,'store']);
+//Route::get('/categorias',[CategoriesController::class,'index']);
+//Route::post('/categorias',[CategoriesController::class,'store']);
 Route::resource('categorias',CategoriesController::class);
 });
 
